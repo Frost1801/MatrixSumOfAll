@@ -24,14 +24,18 @@ public class MatrixTester {
         int n0 = 0;
         //prevents checking the diagonals of the same matrix more than once
         boolean checkedDiagonals = false;
+        //max allowed value
+        int maxAllowed = matrix.length + 1;
 
         for (int i = 0; i < n; i++){
+
             sumRows = 0;
             sumColumns = 0;
             for (int j = 0; j < n; j++){
                 sumRows += matrix[i*n + j];
                 sumColumns += matrix[i + j*n];
-                if (sumRows > toMatch || sumColumns > toMatch){
+                //check if upper or lower bound is crossed
+                if (sumRows > toMatch || sumColumns > toMatch || (sumRows + (n - j-1)*maxAllowed) < toMatch ||  (sumColumns + (n - j - 1)*maxAllowed) < toMatch){
                     return false;
                 }
                 if (!checkedDiagonals){
@@ -39,7 +43,7 @@ public class MatrixTester {
                     value2 = n0 + (n - 1);
                     sumDiag1 += matrix[value1];
                     sumDiag2 += matrix[value2];
-                    if (sumDiag1 > toMatch || sumDiag2 > toMatch){
+                    if (sumDiag1 > toMatch || sumDiag2 > toMatch || (sumDiag1 + (n - j-1)*maxAllowed) < toMatch ||  (sumDiag2 + (n - j - 1)*maxAllowed) < toMatch){
                         return false;
                     }
                     n0 = value2;
