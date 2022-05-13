@@ -3,7 +3,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class start {
-    private static void printSquareMatrix (int [] matrix, int n){ //prints to console a matrix o f nxn
+    private static void printSquareMatrix (int [] matrix, int n){ //prints to console a matrix of nxn
         for (int i = 0; i < n ; i++ ){
             for (int j = 0; j < n ; j++ ){
                 if (matrix[i * n + j] <= 10 && n*n > 10)

@@ -1,8 +1,10 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class GUI implements ActionListener {
     JFrame mainFrame;
@@ -23,6 +25,8 @@ public class GUI implements ActionListener {
     JLabel possibleCombinations;
     JLabel status;
     JLabel testedCombinations;
+
+    JPanel matrixHolder;
 
 
 
@@ -105,6 +109,7 @@ public class GUI implements ActionListener {
         submit = new JButton("submit");
         submit.addActionListener(this);
         submit.setFont(new Font("Pagul",Font.BOLD,20));
+        submit.setFocusable(false);
 
         interact = new JPanel();
         interact.setLayout(new FlowLayout());
@@ -130,26 +135,44 @@ public class GUI implements ActionListener {
         testedCombinations.setFont(new Font("Pagul",Font.BOLD,30));
         testedCombinations.setHorizontalAlignment(JLabel.CENTER);
 
-        operations.add(testedCombinations,BorderLayout.CENTER);
+        operations.add(testedCombinations,BorderLayout.NORTH);
         operations.add(possibleCombinations, BorderLayout.SOUTH);
 
         mainPanel.add(operations, BorderLayout.CENTER);
     }
 
+    private void displaySolution(int []matrix, int n){
+        matrixHolder = new JPanel(new GridLayout(n,n));
+        for(int item: matrix){
+            JLabel toAdd = new JLabel(String.valueOf(item));
+            toAdd.setFont(new Font("Pagul",Font.BOLD,20));
+            toAdd.setHorizontalAlignment(JLabel.CENTER);
+            Border border = BorderFactory.createMatteBorder(10,20,10,15,new Color(105, 165, 227));
+            toAdd.setBorder(border);
+            matrixHolder.add(toAdd);
+        }
+
+        operations.add(matrixHolder, BorderLayout.CENTER);
+
+    }
+    
+    private void displayResults(int optionN){
+        MatrixTester tester = new MatrixTester();
+        status.setText("<html>Selected:" + optionN + "<html>");
+        displayOperations();
+        int[] matrix = tester.startTest(optionN,this);
+        displaySolution(matrix,optionN);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        MatrixTester tester = new MatrixTester();
+
         if (e.getSource() == submit){
             if (option3.isSelected()) {
-                status.setText("<html>Selected: 3<html>");
-                displayOperations();
-                tester.startTest(3,this);
+                displayResults(3);
             }
             else if (option4.isSelected()) {
-                status.setText("<html>Selected: 4<html>");
-                displayOperations();
-                tester.startTest(4,this);
-
+                displayResults(4);
             }
         }
 

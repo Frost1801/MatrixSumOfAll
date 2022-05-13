@@ -58,9 +58,9 @@ public class MatrixTester {
         return (n *( ( n * n ) + 1))/2;
     }
 
-    public void startTest(int n, GUI gui){
+    public int [] startTest(int n, GUI gui){
         MatrixTester tester = new MatrixTester();
-        int [] matrix = tester.testMatrix(n, gui);
+        return tester.testMatrix(n, gui);
     }
 
     private int [] testMatrix (int n, GUI gui){
@@ -69,6 +69,7 @@ public class MatrixTester {
         double combinations = 0;
         gui.setCombinations (combinations);
         do {
+
             fillWithAllowed(matrix);
             combinations++;
 
